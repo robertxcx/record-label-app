@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapActions } from "vuex";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
+  mounted() {
+    const currentDate = new Date();
+    const tokenData = localStorage.getItem("tokenResponse");
+    const jsonToken = JSON.parse(tokenData);
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+    if (jsonToken !== null) {
+      const tokenExpiry = jsonToken.expiry;
+
+      console.log(
+        tokenExpiry + 3600 <
+          new Date(currentDate).setHours(currentDate.getHours())
+      );
+
+      if (
+        tokenExpiry + 3600 <
+        new Date(currentDate).setHours(currentDate.getHours())
+      ) {
+        console.log("Token has expired! Please login again!");
+        this.logout();
+        location.reload();
+      }
+    }
+  },
+  methods: {
+    ...mapActions("auth", ["logout"]),
+  },
+};
+</script>
