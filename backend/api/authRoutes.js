@@ -2,7 +2,6 @@ require("dotenv").config();
 const router = require("express").Router();
 const { db } = require("../firebaseConfig");
 const bcrypt = require("bcrypt");
-const { messaging } = require("firebase-admin");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
