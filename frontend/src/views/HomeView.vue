@@ -5,7 +5,7 @@
       >
        
         <div class="fst-italic fs-1" 
-        style="color: black;">Albums</div>
+        style="color: black;">Artists</div>
       </h2>
   
       <artists-list

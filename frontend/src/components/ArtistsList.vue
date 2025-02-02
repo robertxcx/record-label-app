@@ -153,8 +153,9 @@
     },
     methods: {
       handleNavigateToAlbumsPage: function (artistId) {
-        this.$router.push(`/albumsOfArtistView/${artistId}`);
-      },
+        console.log("Navigare către artist:", artistId);
+    this.$router.push(`/albumsOfArtistView/${artistId}`);
+},
       deleteAArtist(artistId) {
         this.$emit("removeArtist", artistId);
       },
