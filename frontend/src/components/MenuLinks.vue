@@ -1,9 +1,7 @@
 <template>
-    <article
-      class="nav-links-container d-flex justify-content-end align-items-center gap-3"
-    >
+    <article class="nav-links-container d-flex justify-content-end align-items-center gap-3">
       <div
-        v-if="userEmail !== null"
+        v-if="isLoggedIn"
         class="logged-in-links-container d-flex justify-content-center align-items-center gap-2"
       >
         <div
@@ -11,11 +9,11 @@
         >
           <div class="profile-img-container" @mouseenter="showTooltip = true" @mouseleave="showTooltip = false">
             <img
-    id="profile-img"
-    :src="profileImageUrl || require('@/assets/profile_img.png')"
-    class="profile-img-card"
-    @click="triggerFileUpload"
-  />
+              id="profile-img"
+              :src="profileImageUrl || require('@/assets/profile_img.png')"
+              class="profile-img-card"
+              @click="triggerFileUpload"
+            />
             <AddPhoto ref="addPhotoComponent" @photoUploaded="handlePhotoUploaded" />
             <div class="tooltip" v-if="showTooltip">
               Current administrator: {{ userEmail }}
@@ -70,7 +68,7 @@
   
   <script>
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-  import { mapActions } from "vuex";
+  import { mapActions, mapGetters } from "vuex";
   import AddPhoto from '@/components/AddPhoto.vue';
   export default {
     name: "MenuLinks",
@@ -86,11 +84,17 @@
       };
     },
     mounted() {
-    const storedImageUrl = localStorage.getItem('userProfileImageUrl');
-    if (storedImageUrl) {
-      this.profileImageUrl = storedImageUrl;
-    }
-  },
+      const storedImageUrl = localStorage.getItem('userProfileImageUrl');
+      if (storedImageUrl) {
+        this.profileImageUrl = storedImageUrl;
+      }
+    },
+    computed: {
+      ...mapGetters("auth", ["getLoggedInStatus"]),
+      isLoggedIn() {
+        return this.getLoggedInStatus;
+      },
+    },
     methods: {
       ...mapActions("auth", ["logout"]),
       handleLogout: function () {
@@ -98,12 +102,12 @@
         this.$router.push("/login");
       },
       triggerFileUpload() {
-      this.$refs.addPhotoComponent.triggerInput();
-    },
-    handlePhotoUploaded(url) {
-    this.profileImageUrl = url;
-    localStorage.setItem('userProfileImageUrl', url); // Store for future sessions
-  },
+        this.$refs.addPhotoComponent.triggerInput();
+      },
+      handlePhotoUploaded(url) {
+        this.profileImageUrl = url;
+        localStorage.setItem('userProfileImageUrl', url); // Store for future sessions
+      },
     },
   };
   </script>
@@ -211,6 +215,4 @@
       top: 9rem;
     }
   }
-  
   </style>
-  

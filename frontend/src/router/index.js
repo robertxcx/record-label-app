@@ -3,7 +3,8 @@ import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
 import HomeView from "@/views/HomeView";
 import AlbumsOfArtistView from '@/views/AlbumsOfArtistView.vue';
-
+import AddArtistView from '@/views/AddArtistView.vue';
+import EditArtistView from '@/views/EditArtistView.vue';
 const routes = [
     {
         path: "/",
@@ -24,6 +25,16 @@ const routes = [
         path: "/albumsofArtistView/:artistId",
         name: "albumsOfArtistView",
         component: AlbumsOfArtistView,
+      },
+      {
+        path: "/addArtistView",
+        name: "addArtistView",
+        component: AddArtistView,
+      },
+      {
+        path: "/editArtistView/:artistId",
+        name: "editArtistView",
+        component: EditArtistView,
       },
 ];
 
