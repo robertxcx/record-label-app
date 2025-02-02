@@ -1,20 +1,16 @@
 <template>
- <div :class="{ dark: isDarkMode }">
+  <div>
+    <menu-bar />
     <router-view />
-    <button @click="toggleDarkMode">
-      Toggle Dark Mode ({{ isDarkMode ? 'Dark' : 'Light' }})
-    </button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-
+import { mapActions } from "vuex";
+import MenuBar from "./components/MenuBar";
 export default {
   name: "App",
-  computed: {
-    ...mapState(['isDarkMode']),
-  },
+  components: { MenuBar },
   mounted() {
     const currentDate = new Date();
     const tokenData = localStorage.getItem("tokenResponse");
@@ -37,23 +33,32 @@ export default {
         location.reload();
       }
     }
-    if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  },
-  watch: {
-    isDarkMode(newValue) {
-      if (newValue) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    },
   },
   methods: {
-    ...mapActions("auth", ["logout"], "toggleDarkMode"),
+    ...mapActions("auth", ["logout"]),
   },
 };
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>

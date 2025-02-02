@@ -8,13 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@vueuse/core": "^12.5.0",
     "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
     "core-js": "^3.8.3",
     "firebase": "^11.2.0",
     "vee": "^1.2.0",
     "vee-validate": "^4.15.0",
     "vue": "^3.2.13",
+    "vue-fontawesome": "^0.0.2",
     "vue-router": "^4.5.0",
     "vuex": "^4.1.0",
     "vuex-persistedstate": "^4.1.0",
