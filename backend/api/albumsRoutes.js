@@ -52,3 +52,108 @@ router.route("/albums").get(async (req, res) => {
       return res.status(500).json(err);
     }
   });
+
+  router.route("/albums/:artistId").post(auth, async (req, res) => {
+    try {
+      const artistId = req.params.artistId;
+      const albumsCollection = db.collection("albums");
+      const albumToAdd = req.body;
+      albumToAdd.artistId = artistId;
+  
+      if (
+        albumToAdd.title === undefined ||
+        albumToAdd.releaseYear === undefined 
+      ) {
+        return res.status(400).json({
+          message:
+            "Please provide the correct and complete data to create a album!",
+        });
+      }
+  
+      await albumsCollection.add(albumToAdd);
+  
+      return res.status(200).json(albumToAdd);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+  
+  router
+    .route("/albums/:albumId")
+    // GET one album
+    .get(async (req, res) => {
+      try {
+        const albumId = req.params.albumId;
+        const albumDocRef = db.collection("albums").doc(albumId);
+        const albumDoc = await albumDocRef.get();
+  
+        if (albumDoc.exists === false) {
+          return res.status(404).json({
+            message: `The album with id {${albumId}} does not exist!`,
+          });
+        }
+  
+        return res.status(200).json(albumDoc.data());
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
+    })
+    .put(auth, async (req, res) => {
+      try {
+        const albumToUpdateId = req.params.albumId;
+        const albumDocRef = db.collection("albums").doc(albumToUpdateId);
+        const albumDoc = await albumDocRef.get();
+        const albumToUpdate = req.body;
+  
+        if (
+          albumToUpdate.title === undefined ||
+          albumToUpdate.releaseYear === undefined
+        ) {
+          return res.status(400).json({
+            message:
+              "Please provide the correct and complete data to update a album!",
+          });
+        }
+  
+        if (albumDoc.exists === false) {
+          return res.status(404).json({
+            message: `The album with id {${albumToUpdateId}} does not exist!`,
+          });
+        }
+  
+        await albumDocRef.update(albumToUpdate);
+  
+        return res.status(200).json({
+          message: `The album with id {${albumToUpdateId}} has been updated!`,
+        });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
+    })
+    .delete(auth, async (req, res) => {
+      try {
+        const albumId = req.params.albumId;
+        const albumDocRef = db.collection("albums").doc(albumId);
+        const albumDoc = await albumDocRef.get();
+  
+        if (albumDoc.exists === false) {
+          return res.status(404).json({
+            message: `The album with id {${albumId}} does not exist!`,
+          });
+        }
+  
+        await albumDocRef.delete();
+  
+        return res.status(200).json({
+          message: `The album with id {${albumId}} has been deleted succesfully!`,
+        });
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+    });
+  
+  module.exports = router;
+
+

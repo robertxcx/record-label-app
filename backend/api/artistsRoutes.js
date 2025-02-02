@@ -23,7 +23,7 @@ router.route("/artists").get(async(req, res) => {
         artistsDocRef = await artistsCollection.get();
         artistsDocRef.forEach((artistsDoc) => {
             const artistsDocData = artistsDoc.data();
-            artistsDocData.artistsId = artistsDoc.id;
+            artistsDocData.artistId = artistsDoc.id;
             response.push(artistsDocData);
         });
     }
@@ -132,5 +132,40 @@ router
       return res.status(500).json(err);
     }
   });
-
+  router.route("/artists/:artistId/albums").get(async (req, res) => {
+    try {
+      const artistId = req.params.artistId;
+      const artistCollection = db.collection("artists");
+      const artistDocRef = artistCollection.doc(artistId);
+      const artistDoc = await artistDocRef.get();
+  
+      if (artistDoc.exists === false)
+        return res.status(404).json({
+          message: `The artist with id {${artistId}} does not exist!`,
+        });
+  
+      const albumsCollection = db.collection("albums");
+      const albumsDocRef = await albumsCollection
+        .where("artistId", "==", `${artistId}`)
+        .get();
+  
+      if (albumsDocRef.empty)
+        return res
+          .status(200)
+          .json({ message: "This artist did not register any albums yet!" });
+  
+      let response = [];
+  
+      albumsDocRef.forEach((albumDoc) => {
+        const albumDocData = albumDoc.data();
+        albumDocData.albumId = albumDoc.id;
+  
+        response.push(albumDocData);
+      });
+  
+      return res.status(200).json(response);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
 module.exports = router;
