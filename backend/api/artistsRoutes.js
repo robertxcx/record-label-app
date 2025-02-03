@@ -106,6 +106,7 @@ router
   .delete(auth, async (req, res) => {
     try {
       const artistId = req.params.artistId;
+      console.log("Deleting artist with ID:", artistId);
 
       const artistsCollection = db.collection("artists");
       const artistDocRef = artistsCollection.doc(artistId);
