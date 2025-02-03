@@ -5,10 +5,11 @@
       <Form
         @submit="handleEditArtist"
         :validation-schema="schema"
-        class="border border-3 border-dark p-5"
+        class="border border-0 border-dark p-1"
       >
+      <div><label  class="fw-bold fs-4 h1 mt-4">Edit artist data</label></div>
         <div class="form-group mb-3">
-          <label for="name" class="fw-bold fs-4">Name</label>
+          <label for="name" class="fw-bold fs-4 mt-5">Name</label>
           <div>
             <Field
               name="name"

@@ -1,69 +1,48 @@
 <template>
-    <article class="login-page col-md-12">
-      <header>
-        <h2 class="login-page-title fw-bolder mt-4 mb-5 fs-1">
-          Hop right in!
-        </h2>
-      </header>
-  
-      <div class="login-card border border-2 border-secondary rounded p-4">
-  
-  
-        <Form @submit="handleLogin" :validation-schema="schema">
-          <div class="form-group mb-3">
-            <label for="email" class="fw-bold fs-4">Email</label>
-            <div>
-              <Field
-                name="email"
-                type="text"
-                class="form-control register-input fw-bold m-auto border border-2 border-dark"
-                v-model="user.email"
-              />
-              <ErrorMessage name="email" class="text-danger fw-bold" />
-            </div>
-          </div>
-  
-          <div class="form-group mb-3">
-            <label for="password" class="fw-bold fs-4">Password</label>
-            <Field
-              name="password"
-              type="password"
-              class="form-control register-input fw-bold m-auto border border-2 border-dark"
-              v-model="user.password"
-            />
-            <ErrorMessage name="password" class="text-danger fw-bold" />
-          </div>
-  
-          <div
-            class="form-group d-flex justify-content-center align-items-center flex-column gap-2 mt-5"
-          >
-            <button
-              class="control-btn btn btn-dark fw-bold border border border-0 w-100 m-auto" 
-              :disabled="loading"
-            >
-              <span
-                v-show="loading"
-                class="spinner-border spinner-border-sm"
-              ></span>
-              <span>Hop in</span>
-            </button>
-  
-            <button
-              class="control-btn btn btn-outline-dark fw-bold border border border-0 w-100 m-auto" 
-              @click="navigateToRegisterPage"
-            >
-              Sign up
-            </button>
-          </div>
-  
-          <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
-          </div>
-        </Form>
+<article class="login-page">
+  <div class="login-card">
+    <h2 class="login-page-title">Login</h2>
+
+    <Form @submit="handleLogin" :validation-schema="schema">
+      <Field
+        name="email"
+        type="text"
+        class="form-control register-input"
+        v-model="user.email"
+        placeholder="Email"
+      />
+      <ErrorMessage name="email" class="text-danger" />
+
+      <Field
+        name="password"
+        type="password"
+        class="form-control register-input"
+        v-model="user.password"
+        placeholder="Password"
+      />
+      <ErrorMessage name="password" class="text-danger" />
+
+      <button
+        class="control-btn btn btn-dark"
+        :disabled="loading"
+      >
+        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+        <span>Login</span>
+      </button>
+
+      <button
+        class="control-btn btn btn-outline-dark"
+        @click="navigateToRegisterPage"
+      >
+        Sign up
+      </button>
+
+      <div v-if="message" class="alert alert-danger mt-3">
+        {{ message }}
       </div>
-    </article>
+    </Form>
+  </div>
+</article>
   </template>
   
   <script>
@@ -103,7 +82,7 @@
         try {
           const response = await this.login(this.user);
   
-          if (response.message === "Logged in successfully!")
+          if (response.message === "Successfully logged in.")
             this.$router.push("/");
         } catch (error) {
           console.log(error);
@@ -125,32 +104,88 @@
   </script>
   
   <style scoped>
-  .login-page {
-    height: 70vh;
-  }
-  
-  .login-page-title {
-    color: var(--title-color);
-  }
-  
-  .profile-img-card {
-    width: 4rem;
-    border-radius: 50%;
-    margin: 1rem auto 2rem;
-  }
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+
+.login-card {
+  width: 50%;
+  max-width: 500px;
+  padding: 3rem;
+  background-color: #121212; /* Negru mat */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.login-page-title {
+  color:  #1DB954; /* Verde Spotify */
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Circular', sans-serif; /* Font similar Spotify */
+}
+
+.register-input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-bottom: 2px solid #1DB954;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.register-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.control-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.control-btn.btn-dark {
+  background-color: #1DB954;
+  color: #000;
+}
+
+.control-btn.btn-dark:hover {
+  opacity: 0.8;
+}
+
+.control-btn.btn-outline-dark {
+  border: 2px solid #1DB954;
+  color: #1DB954;
+  background-color: transparent;
+}
+
+.control-btn.btn-outline-dark:hover {
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+}
+
+.text-danger {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: red;
+}
+
+@media (max-width: 768px) {
   .login-card {
-    width: 20rem;
-    margin: 0 auto;
+    width: 90%;
   }
-  
-  .login-input {
-    width: 16rem;
-    border-radius: 0.5rem;
-    font-size: 1.3rem;
-  }
-  
-  .control-btn {
-    line-height: 1.5;
-  }
+}
   </style>
   

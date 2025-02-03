@@ -51,7 +51,7 @@
       >
         <router-link to="/register" class="nav-link">
           <button class="btn btn-light fw-bold border border-info border-0">
-            <font-awesome-icon icon="user-plus" />
+            <font-awesome-icon :icon="['fas', 'user-secret']" />
           </button>
         </router-link>
   

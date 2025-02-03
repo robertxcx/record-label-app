@@ -19,6 +19,7 @@ import {
   faGamepad,
   faTrophy,
   faRightFromBracket,
+  faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faPlus,
@@ -30,7 +31,8 @@ library.add(
   faPen,
   faGamepad,
   faTrophy,
-  faRightFromBracket
+  faRightFromBracket,
+  faUserSecret
 );
 
 createApp(App).use(router).use(store).mount("#app");

@@ -42,7 +42,7 @@
   }
   
   #nav-bar {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid #000000;
     height: 10vh;
     width: 100%;
   }
