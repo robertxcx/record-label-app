@@ -119,5 +119,8 @@ getters: {
     getAlbums: (state) => {
       return state.albumsList;
     },
+    getAlbum: (state) => {
+      return state.album;
+    },
 }
 };

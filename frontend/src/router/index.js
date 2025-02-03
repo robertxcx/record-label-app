@@ -5,6 +5,8 @@ import HomeView from "@/views/HomeView";
 import AlbumsOfArtistView from '@/views/AlbumsOfArtistView.vue';
 import AddArtistView from '@/views/AddArtistView.vue';
 import EditArtistView from '@/views/EditArtistView.vue';
+import AddAlbumView from '@/views/AddAlbumView.vue';
+import EditAlbumView from '@/views/EditAlbumView.vue';
 const routes = [
     {
         path: "/",
@@ -36,6 +38,16 @@ const routes = [
         name: "editArtistView",
         component: EditArtistView,
       },
+    {
+      path: "/addAlbumView/:artistId",
+      name: "addAlbumView",
+      component: AddAlbumView,
+    },
+    {
+      path: "/editAlbumView/:albumId/artist/:artistId",
+      name: "editAlbumView",
+      component: EditAlbumView,
+    },
 ];
 
 const router = createRouter({

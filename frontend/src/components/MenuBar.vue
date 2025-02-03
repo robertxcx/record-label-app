@@ -5,8 +5,8 @@
         id="home-link"
         class="home-btn-element fs-1 d-flex justify-content-center align-items-center gap-3 flex-row"
       >
-        <font-awesome-icon icon="gamepad" />
-        <h1>Gamification</h1>
+
+        <h1>Best artists</h1>
       </router-link>
   
       <menu-links :userEmail="getLoggedInUserEmail" />
@@ -16,7 +16,6 @@
   <script>
   import MenuLinks from "./MenuLinks";
   import { mapGetters } from "vuex";
-  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
   
   export default {
     name: "MenuBar",
@@ -33,7 +32,6 @@
     },
     components: {
       MenuLinks,
-      FontAwesomeIcon,
     },
   };
   </script>
